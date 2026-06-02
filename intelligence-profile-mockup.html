@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Citylitics Intelligence Profiles — Flagstaff, AZ</title>
+<style>
+  :root{
+    --c1:#163B5E;   /* deep navy - text, titles, bg */
+    --c2:#009BEE;   /* bright blue - links, subtitles */
+    --c3:#00D2CF;   /* teal */
+    --c4:#00EFA1;   /* green */
+    --c5:#AFF33B;   /* lime */
+    --c6:#FE1F67;   /* error / decrease */
+    --c7:#FF9C00;   /* warning / monitor */
+    --c1-90:#1d4a73;
+    --c1-80:#274f78;
+    --ink:#163B5E;
+    --paper:#f4f7fa;
+    --card:#ffffff;
+    --line:#dde6ef;
+    --muted:#5b7287;
+    --font-display:'Montserrat','Segoe UI',sans-serif;
+    --font-body:'Halyard Display','Helvetica Neue',Arial,sans-serif;
+  }
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Mulish:wght@300;400;500;600;700&display=swap');
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:'Mulish',var(--font-body);
+    color:var(--ink);
+    background:var(--paper);
+    line-height:1.45;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4,.display{font-family:'Montserrat',var(--font-display);}
+
+  /* ---------- TOP BAR ---------- */
+  .topbar{
+    background:var(--c1);
+    color:#fff;
+    padding:14px 26px;
+    display:flex;align-items:center;gap:18px;
+    position:sticky;top:0;z-index:50;
+    box-shadow:0 2px 14px rgba(22,59,94,.18);
+  }
+  .logo{display:flex;align-items:center;gap:11px;font-family:'Montserrat';font-weight:800;letter-spacing:.5px;font-size:19px}
+  .logo .mark{width:30px;height:30px;flex:0 0 auto}
+  .logo .divider{width:1px;height:24px;background:rgba(255,255,255,.35);margin:0 4px}
+  .logo .product{font-weight:600;font-size:15px;color:var(--c3);letter-spacing:.3px}
+  .topbar .spacer{flex:1}
+  .topbar .pill{
+    background:rgba(0,155,238,.18);border:1px solid rgba(0,210,207,.4);
+    color:var(--c3);font-size:11px;font-weight:700;letter-spacing:1px;
+    text-transform:uppercase;padding:5px 11px;border-radius:30px;font-family:'Montserrat';
+  }
+  .topbar .user{display:flex;align-items:center;gap:8px;font-size:13px;color:#cfe2f1}
+  .topbar .avatar{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--c2),var(--c4));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;color:var(--c1);font-family:'Montserrat'}
+
+  /* ---------- HEADER / OWNER ID ---------- */
+  .owner-head{
+    background:linear-gradient(120deg,var(--c1) 0%,#13344f 55%,#0f2c45 100%);
+    color:#fff;padding:24px 26px 22px;position:relative;overflow:hidden;
+  }
+  .owner-head::after{
+    content:"";position:absolute;right:-60px;top:-60px;width:280px;height:280px;border-radius:50%;
+    background:conic-gradient(from 200deg,var(--c2),var(--c3),var(--c4),var(--c5),var(--c2));
+    opacity:.13;filter:blur(2px);
+  }
+  .owner-head .row{display:flex;align-items:flex-start;gap:22px;flex-wrap:wrap;position:relative;z-index:2}
+  .owner-name{font-size:27px;font-weight:800;letter-spacing:.3px}
+  .owner-sub{color:#9fc4de;font-size:13.5px;margin-top:3px}
+  .owner-tags{display:flex;gap:8px;margin-top:13px;flex-wrap:wrap}
+  .tag{font-size:11px;font-weight:700;font-family:'Montserrat';letter-spacing:.5px;padding:4px 10px;border-radius:5px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15)}
+  .tag.t3{color:var(--c3);border-color:rgba(0,210,207,.4)}
+  .tag.t5{color:var(--c5);border-color:rgba(175,243,59,.4)}
+  .owner-head .spacer{flex:1}
+  .score-card{
+    background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);border-radius:12px;
+    padding:14px 18px;text-align:center;min-width:148px;backdrop-filter:blur(4px)
+  }
+  .score-card .lbl{font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:#9fc4de;font-family:'Montserrat';font-weight:700}
+  .score-card .val{font-size:34px;font-weight:800;font-family:'Montserrat';line-height:1.1;margin-top:2px}
+  .score-card .val.hot{color:var(--c5)}
+  .score-card .delta{font-size:11px;margin-top:2px;font-weight:600}
+  .delta.up{color:var(--c4)} .delta.down{color:var(--c6)}
+
+  /* ---------- USE-CASE LENS SWITCHER ---------- */
+  .lens-bar{background:#fff;border-bottom:1px solid var(--line);padding:11px 26px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .lens-bar .label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);font-family:'Montserrat'}
+  .lens{
+    border:1.5px solid var(--line);background:#fff;color:var(--c1);
+    font-family:'Montserrat';font-weight:600;font-size:12.5px;padding:7px 15px;border-radius:30px;cursor:pointer;
+    transition:all .18s ease;display:flex;align-items:center;gap:7px
+  }
+  .lens:hover{border-color:var(--c2)}
+  .lens.active{background:var(--c1);color:#fff;border-color:var(--c1)}
+  .lens .dot{width:8px;height:8px;border-radius:50%;background:var(--c3)}
+  .lens.active .dot{background:var(--c5)}
+
+  /* ---------- LAYOUT ---------- */
+  .wrap{display:grid;grid-template-columns:200px 1fr;gap:0;min-height:60vh}
+  .sidenav{background:#fff;border-right:1px solid var(--line);padding:16px 0}
+  .sidenav .grp{font-size:10px;text-transform:uppercase;letter-spacing:1.3px;color:var(--muted);font-family:'Montserrat';font-weight:700;padding:10px 20px 5px}
+  .nav-item{display:flex;align-items:center;gap:10px;padding:9px 20px;font-size:13.5px;cursor:pointer;border-left:3px solid transparent;color:var(--c1);transition:.14s}
+  .nav-item:hover{background:var(--paper)}
+  .nav-item.active{border-left-color:var(--c2);background:var(--paper);font-weight:600}
+  .nav-item .ic{width:18px;height:18px;flex:0 0 auto;opacity:.85}
+  .nav-item .cnt{margin-left:auto;font-size:10.5px;font-weight:700;font-family:'Montserrat';background:var(--c1);color:#fff;border-radius:20px;padding:1px 7px;min-width:20px;text-align:center}
+  .nav-item .cnt.warn{background:var(--c7)} .nav-item .cnt.hot{background:var(--c6)}
+
+  .main{padding:22px 26px 50px}
+
+  /* ---------- CONTEXT STRIP ---------- */
+  .ctx-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(178px,1fr));gap:13px;margin-bottom:24px}
+  .ctx-card{background:var(--card);border:1px solid var(--line);border-radius:11px;padding:14px 15px;position:relative;overflow:hidden;cursor:pointer;transition:.18s}
+  .ctx-card:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(22,59,94,.1)}
+  .ctx-card .bar{position:absolute;left:0;top:0;bottom:0;width:4px}
+  .ctx-card .ctx-name{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);font-family:'Montserrat'}
+  .ctx-card .ctx-val{font-size:25px;font-weight:800;font-family:'Montserrat';margin-top:5px}
+  .ctx-card .ctx-meta{font-size:11.5px;color:var(--muted);margin-top:3px}
+  .ctx-card .ctx-flag{position:absolute;top:12px;right:12px;font-size:9.5px;font-weight:700;font-family:'Montserrat';padding:2px 7px;border-radius:20px;letter-spacing:.5px}
+
+  /* ---------- SECTION ---------- */
+  .section{background:var(--card);border:1px solid var(--line);border-radius:13px;margin-bottom:20px;overflow:hidden}
+  .section > .sec-head{display:flex;align-items:center;gap:11px;padding:15px 19px;border-bottom:1px solid var(--line)}
+  .sec-head .sec-icon{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;flex:0 0 auto}
+  .sec-head h3{font-size:15.5px;font-weight:700}
+  .sec-head .sub{font-size:12px;color:var(--muted);margin-top:1px}
+  .sec-head .spacer{flex:1}
+  .sec-head .src{font-size:10.5px;color:var(--muted);font-family:'Montserrat';font-weight:600;letter-spacing:.4px;background:var(--paper);padding:4px 9px;border-radius:6px;border:1px solid var(--line)}
+  .sec-body{padding:6px 19px 17px}
+
+  /* ---------- SIGNAL ROWS ---------- */
+  .signal{display:flex;gap:13px;padding:13px 0;border-bottom:1px dashed var(--line);align-items:flex-start}
+  .signal:last-child{border-bottom:none}
+  .sig-icon{width:34px;height:34px;border-radius:9px;flex:0 0 auto;display:flex;align-items:center;justify-content:center;font-family:'Montserrat';font-weight:800;font-size:13px;color:#fff}
+  .sig-body{flex:1}
+  .sig-title{font-size:14px;font-weight:600;color:var(--c1)}
+  .sig-desc{font-size:12.5px;color:#4a6177;margin-top:2px}
+  .sig-foot{display:flex;gap:12px;margin-top:6px;flex-wrap:wrap;align-items:center}
+  .chip{font-size:10.5px;font-weight:700;font-family:'Montserrat';padding:2px 8px;border-radius:20px;letter-spacing:.4px}
+  .chip.high{background:#ffe3ec;color:var(--c6)}
+  .chip.med{background:#fff0d6;color:#c47700}
+  .chip.low{background:#e1f8f0;color:#0a9d6f}
+  .chip.date{background:var(--paper);color:var(--muted)}
+  .chip.src{background:#e6f4fd;color:var(--c2)}
+  .sig-foot .conf{font-size:11px;color:var(--muted);margin-left:auto;display:flex;align-items:center;gap:5px}
+  .conf .meter{width:54px;height:5px;border-radius:5px;background:var(--line);overflow:hidden}
+  .conf .meter span{display:block;height:100%;border-radius:5px}
+
+  /* relevance highlight when a lens is active */
+  .signal.relevant{background:linear-gradient(90deg,rgba(0,239,161,.08),transparent 60%);border-radius:8px;padding-left:10px;margin-left:-10px}
+  .signal .lens-flag{display:none;font-size:9.5px;font-weight:800;font-family:'Montserrat';color:var(--c1);background:var(--c5);padding:2px 7px;border-radius:5px;letter-spacing:.4px}
+  .signal.relevant .lens-flag{display:inline-block}
+
+  /* ---------- TIMELINE ---------- */
+  .timeline{position:relative;padding-left:20px;margin-top:6px}
+  .timeline::before{content:"";position:absolute;left:5px;top:6px;bottom:6px;width:2px;background:var(--line)}
+  .tl-item{position:relative;padding:7px 0 7px 4px}
+  .tl-item::before{content:"";position:absolute;left:-18px;top:11px;width:11px;height:11px;border-radius:50%;background:var(--c2);border:2px solid #fff;box-shadow:0 0 0 1px var(--line)}
+  .tl-item.hot::before{background:var(--c6)}
+  .tl-item.warn::before{background:var(--c7)}
+  .tl-date{font-size:10.5px;font-family:'Montserrat';font-weight:700;color:var(--muted);letter-spacing:.4px}
+  .tl-txt{font-size:13px;color:var(--c1)}
+
+  /* ---------- TABLE ---------- */
+  table.data{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:4px}
+  table.data th{text-align:left;font-family:'Montserrat';font-weight:700;font-size:10.5px;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);padding:8px 10px;border-bottom:2px solid var(--line)}
+  table.data td{padding:9px 10px;border-bottom:1px solid var(--line);color:var(--c1)}
+  table.data tr:hover td{background:var(--paper)}
+  .num.neg{color:var(--c6);font-weight:700} .num.pos{color:#0a9d6f;font-weight:700}
+
+  /* ---------- footer graphic bar ---------- */
+  .brandbar{height:7px;background:linear-gradient(90deg,var(--c1) 0 18%,var(--c2) 18% 45%,var(--c3) 45% 68%,var(--c4) 68% 86%,var(--c5) 86% 100%)}
+  .footer{padding:18px 26px;color:var(--muted);font-size:11.5px;display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+  .footer .logo-sm{font-family:'Montserrat';font-weight:800;color:var(--c1);letter-spacing:.5px}
+
+  .hidden{display:none}
+  .twocol{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  @media(max-width:900px){.wrap{grid-template-columns:1fr}.sidenav{display:none}.twocol{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="logo">
+    <svg class="mark" viewBox="0 0 100 100" fill="none">
+      <path d="M70 28 A28 28 0 1 0 70 72" stroke="#009BEE" stroke-width="13" stroke-linecap="round"/>
+      <path d="M62 22 L80 30 L74 14 Z" fill="#00EFA1"/>
+      <path d="M55 18 A33 33 0 0 1 78 30" stroke="#00D2CF" stroke-width="7" stroke-linecap="round"/>
+      <path d="M70 24 L84 27 L78 38 Z" fill="#AFF33B"/>
+    </svg>
+    CITYLITICS
+    <span class="divider"></span>
+    <span class="product">Intelligence Profiles</span>
+  </div>
+  <div class="spacer"></div>
+  <span class="pill">Beta Concept</span>
+  <div class="user">
+    <span>Demo Workspace</span>
+    <div class="avatar">CL</div>
+  </div>
+</div>
+
+<!-- OWNER HEADER -->
+<div class="owner-head">
+  <div class="row">
+    <div>
+      <div class="owner-name">City of Flagstaff — Utilities Division</div>
+      <div class="owner-sub">Coconino County, Arizona · Pop. ~76,800 · Owner ID: AZ-04005-FLAG-UTL · Water · Wastewater · Stormwater</div>
+      <div class="owner-tags">
+        <span class="tag">MUNI · CITY</span>
+        <span class="tag t3">Combined Utility</span>
+        <span class="tag t5">Water-stressed region</span>
+        <span class="tag">FY ends Jun 30</span>
+      </div>
+    </div>
+    <div class="spacer"></div>
+    <div class="score-card">
+      <div class="lbl">Profile Activity</div>
+      <div class="val hot">87</div>
+      <div class="delta up">▲ 14 pts / 90 days</div>
+    </div>
+    <div class="score-card">
+      <div class="lbl">Open Signals</div>
+      <div class="val">23</div>
+      <div class="delta up">▲ 6 new this month</div>
+    </div>
+  </div>
+</div>
+
+<!-- LENS SWITCHER -->
+<div class="lens-bar">
+  <span class="label">View through lens:</span>
+  <button class="lens active" data-lens="all"><span class="dot"></span>Full Profile</button>
+  <button class="lens" data-lens="om"><span class="dot"></span>O&amp;M Outsourcing Fit</button>
+  <button class="lens" data-lens="saas"><span class="dot"></span>SaaS / Enterprise Lead</button>
+  <span style="flex:1"></span>
+  <span id="lensNote" style="font-size:12px;color:var(--muted)"></span>
+</div>
+
+<div class="wrap">
+  <!-- SIDENAV -->
+  <nav class="sidenav">
+    <div class="grp">Contexts</div>
+    <div class="nav-item active"><span class="ic">📊</span>Overview</div>
+    <div class="nav-item"><span class="ic">💰</span>Financial<span class="cnt warn">7</span></div>
+    <div class="nav-item"><span class="ic">👥</span>Stakeholders<span class="cnt">5</span></div>
+    <div class="nav-item"><span class="ic">🏗️</span>Capital Infra<span class="cnt hot">8</span></div>
+    <div class="nav-item"><span class="ic">📑</span>Procurement<span class="cnt">3</span></div>
+    <div class="nav-item"><span class="ic">⚖️</span>Regulatory</div>
+    <div class="grp">Profile</div>
+    <div class="nav-item"><span class="ic">🗺️</span>Asset Map</div>
+    <div class="nav-item"><span class="ic">🔔</span>Alert Rules</div>
+    <div class="nav-item"><span class="ic">📤</span>Export / Feed</div>
+  </nav>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- CONTEXT STRIP -->
+    <div class="ctx-strip">
+      <div class="ctx-card">
+        <div class="bar" style="background:var(--c2)"></div>
+        <div class="ctx-name">Financial</div>
+        <div class="ctx-val">7</div>
+        <div class="ctx-meta">signals · 2 high priority</div>
+        <span class="ctx-flag" style="background:#fff0d6;color:#c47700">RATE STUDY</span>
+      </div>
+      <div class="ctx-card">
+        <div class="bar" style="background:var(--c3)"></div>
+        <div class="ctx-name">Stakeholders</div>
+        <div class="ctx-val">5</div>
+        <div class="ctx-meta">signals · 1 leadership gap</div>
+        <span class="ctx-flag" style="background:#ffe3ec;color:var(--c6)">DIR. OPEN</span>
+      </div>
+      <div class="ctx-card">
+        <div class="bar" style="background:var(--c4)"></div>
+        <div class="ctx-name">Capital Infra</div>
+        <div class="ctx-val">8</div>
+        <div class="ctx-meta">signals · $48M in CIP</div>
+        <span class="ctx-flag" style="background:#e1f8f0;color:#0a9d6f">ACTIVE</span>
+      </div>
+      <div class="ctx-card">
+        <div class="bar" style="background:var(--c5)"></div>
+        <div class="ctx-name">Procurement</div>
+        <div class="ctx-val">3</div>
+        <div class="ctx-meta">signals · 1 open RFP</div>
+        <span class="ctx-flag" style="background:#e6f4fd;color:var(--c2)">RFP LIVE</span>
+      </div>
+    </div>
+
+    <!-- LENS SUMMARY CARD (changes per lens) -->
+    <div class="section" id="lensSummary" style="display:none">
+      <div class="sec-head">
+        <div class="sec-icon" style="background:var(--c1)" id="lensSumIcon">🎯</div>
+        <div>
+          <h3 id="lensSumTitle">Lens Summary</h3>
+          <div class="sub" id="lensSumSub"></div>
+        </div>
+        <div class="spacer"></div>
+        <div class="score-card" style="background:var(--paper);border-color:var(--line);min-width:120px;padding:9px 14px">
+          <div class="lbl" style="color:var(--muted)">Fit Score</div>
+          <div class="val" id="lensFit" style="color:var(--c1);font-size:27px">—</div>
+        </div>
+      </div>
+      <div class="sec-body">
+        <div id="lensReasons" style="font-size:13px;color:#4a6177"></div>
+      </div>
+    </div>
+
+    <!-- FINANCIAL CONTEXT -->
+    <div class="section">
+      <div class="sec-head">
+        <div class="sec-icon" style="background:var(--c2)">💰</div>
+        <div><h3>Financial Context</h3><div class="sub">Budgets · rates · reserves · grant &amp; loan activity</div></div>
+        <div class="spacer"></div>
+        <div class="src">SRC: Budget PDFs · CAFR · Council agendas · State revolving fund DB</div>
+      </div>
+      <div class="sec-body">
+        <div class="signal relevant" data-lens="om saas">
+          <div class="sig-icon" style="background:var(--c7)">$</div>
+          <div class="sig-body">
+            <div class="sig-title">Water/Sewer rate study underway — 18% multi-year increase proposed <span class="lens-flag">LENS MATCH</span></div>
+            <div class="sig-desc">Council authorized a cost-of-service rate study (Raftelis) citing rising O&amp;M and treatment costs. Phased increases proposed FY26–FY28.</div>
+            <div class="sig-foot">
+              <span class="chip high">HIGH PRIORITY</span>
+              <span class="chip date">Detected Apr 2026</span>
+              <span class="chip src">Council Agenda · Item 7B</span>
+              <span class="conf">Confidence <span class="meter"><span style="width:88%;background:var(--c4)"></span></span> 88%</span>
+            </div>
+          </div>
+        </div>
+        <div class="signal relevant" data-lens="om">
+          <div class="sig-icon" style="background:var(--c6)">↓</div>
+          <div class="sig-body">
+            <div class="sig-title">Utility fund operating deficit flagged in mid-year review <span class="lens-flag">LENS MATCH</span></div>
+            <div class="sig-desc">Mid-year financial report shows wastewater O&amp;M expenditures tracking 11% over budget; staff cite overtime &amp; emergency repairs at the WRF.</div>
+            <div class="sig-foot">
+              <span class="chip high">HIGH PRIORITY</span>
+              <span class="chip date">Detected Feb 2026</span>
+              <span class="chip src">Mid-Year Budget Report</span>
+              <span class="conf">Confidence <span class="meter"><span style="width:79%;background:var(--c4)"></span></span> 79%</span>
+            </div>
+          </div>
+        </div>
+        <div class="signal" data-lens="">
+          <div class="sig-icon" style="background:var(--c4)">＋</div>
+          <div class="sig-body">
+            <div class="sig-title">$12.4M WIFIA / SRF loan application submitted</div>
+            <div class="sig-desc">Applied to AZ WIFA for water reclamation plant upgrade financing; indicates committed large-capital trajectory.</div>
+            <div class="sig-foot">
+              <span class="chip med">MEDIUM</span><span class="chip date">Jan 2026</span><span class="chip src">WIFA Board Packet</span>
+              <span class="conf">Confidence <span class="meter"><span style="width:72%;background:var(--c3)"></span></span> 72%</span>
+            </div>
+          </div>
+        </div>
+        <table class="data" style="margin-top:14px">
+          <thead><tr><th>Metric</th><th>FY24</th><th>FY25</th><th>FY26 (proj)</th><th>Trend</th></tr></thead>
+          <tbody>
+            <tr><td>Utility operating revenue</td><td>$41.2M</td><td>$43.0M</td><td>$45.8M</td><td class="num pos">▲ 6.5%</td></tr>
+            <tr><td>O&amp;M expenditure</td><td>$28.1M</td><td>$31.4M</td><td>$34.9M</td><td class="num neg">▲ 11.1%</td></tr>
+            <tr><td>Days cash on hand</td><td>241</td><td>198</td><td>167</td><td class="num neg">▼ declining</td></tr>
+            <tr><td>Avg residential bill</td><td>$58.10</td><td>$61.40</td><td>$72.50 (prop.)</td><td class="num neg">▲ 18%</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- STAKEHOLDERS CONTEXT -->
+    <div class="section">
+      <div class="sec-head">
+        <div class="sec-icon" style="background:var(--c3)">👥</div>
+        <div><h3>Stakeholders &amp; Personnel</h3><div class="sub">Leadership · role changes · consultants of record</div></div>
+        <div class="spacer"></div>
+        <div class="src">SRC: LinkedIn · Council minutes · Press · Org charts</div>
+      </div>
+      <div class="sec-body">
+        <div class="signal relevant" data-lens="om saas">
+          <div class="sig-icon" style="background:var(--c6)">!</div>
+          <div class="sig-body">
+            <div class="sig-title">Utilities Director position open — interim in place <span class="lens-flag">LENS MATCH</span></div>
+            <div class="sig-desc">Long-tenured Utilities Director retired Mar 2026; interim appointed, national search launched. Leadership transitions correlate with strategic re-evaluation of operating models &amp; vendor stacks.</div>
+            <div class="sig-foot">
+              <span class="chip high">HIGH PRIORITY</span><span class="chip date">Mar 2026</span><span class="chip src">Council Minutes · Press</span>
+              <span class="conf">Confidence <span class="meter"><span style="width:91%;background:var(--c4)"></span></span> 91%</span>
+            </div>
+          </div>
+        </div>
+        <div class="signal relevant" data-lens="om">
+          <div class="sig-icon" style="background:var(--c2)">↻</div>
+          <div class="sig-body">
+            <div class="sig-title">New Public Works hire from a privatized-operations background <span class="lens-flag">LENS MATCH</span></div>
+            <div class="sig-desc">Incoming Deputy PW Director previously oversaw a contract-operated WWTP at a peer city — signals openness to alternative service delivery.</div>
+            <div class="sig-foot">
+              <span class="chip med">MEDIUM</span><span class="chip date">Feb 2026</span><span class="chip src">LinkedIn · City PR</span>
+              <span class="conf">Confidence <span class="meter"><span style="width:64%;background:var(--c3)"></span></span> 64%</span>
+            </div>
+          </div>
+        </div>
+        <div class="signal" data-lens="">
+          <div class="sig-icon" style="background:var(--c4)">◎</div>
+          <div class="sig-body">
+            <div class="sig-title">Consultant of record: Carollo (engineering), Raftelis (rates)</div>
+            <div class="sig-desc">Standing engineering &amp; financial advisors identified from recent contract awards — useful for partner/competitor mapping.</div>
+            <div class="sig-foot">
+              <span class="chip low">CONTEXT</span><span class="chip date">Ongoing</span><span class="chip src">Contract Awards</span>
+              <span class="conf">Confidence <span class="meter"><span style="width:83%;background:var(--c4)"></span></span> 83%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CAPITAL INFRA CONTEXT -->
+    <div class="section">
+      <div class="sec-head">
+        <div class="sec-icon" style="background:var(--c4)">🏗️</div>
+        <div><h3>Capital Infrastructure</h3><div class="sub">CIP · planned projects · asset condition · maintenance backlog</div></div>
+        <div class="spacer"></div>
+        <div class="src">SRC: CIP doc · Capital budget · CMOM · Asset mgmt plan</div>
+      </div>
+      <div class="sec-body">
+        <div class="twocol">
+          <div>
+            <div class="timeline">
+              <div class="tl-item hot">
+                <div class="tl-date">FY26–FY28 · $22.0M</div>
+                <div class="tl-txt">Wildcat Hill WRF capacity &amp; nutrient-removal upgrade — design phase</div>
+              </div>
+              <div class="tl-item warn">
+                <div class="tl-date">FY26 · $6.8M</div>
+                <div class="tl-txt">Lake Mary WTP membrane replacement — aging asset, past useful life</div>
+              </div>
+              <div class="tl-item">
+                <div class="tl-date">FY27 · $9.5M</div>
+                <div class="tl-txt">Trunk sewer rehabilitation, Rio de Flag corridor</div>
+              </div>
+              <div class="tl-item">
+                <div class="tl-date">FY28 · $4.2M</div>
+                <div class="tl-txt">SCADA modernization + AMI meter rollout (Phase 1)</div>
+              </div>
+              <div class="tl-item warn">
+                <div class="tl-date">Backlog</div>
+                <div class="tl-txt">$31M deferred renewal flagged in asset management plan</div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="signal relevant" data-lens="om">
+              <div class="sig-icon" style="background:var(--c7)">⚙</div>
+              <div class="sig-body">
+                <div class="sig-title">WRF running near hydraulic capacity <span class="lens-flag">LENS MATCH</span></div>
+                <div class="sig-desc">Plant flows at ~88% of permitted capacity; operational strain + staffing gaps cited — classic third-party-operations trigger.</div>
+                <div class="sig-foot"><span class="chip high">HIGH</span><span class="chip src">CMOM Report</span></div>
+              </div>
+            </div>
+            <div class="signal relevant" data-lens="saas">
+              <div class="sig-icon" style="background:var(--c2)">▣</div>
+              <div class="sig-body">
+                <div class="sig-title">SCADA + AMI modernization budgeted <span class="lens-flag">LENS MATCH</span></div>
+                <div class="sig-desc">Phase-1 funding approved for control-system and metering software — active enterprise-software buying window.</div>
+                <div class="sig-foot"><span class="chip med">MEDIUM</span><span class="chip src">Capital Budget</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROCUREMENT CONTEXT -->
+    <div class="section">
+      <div class="sec-head">
+        <div class="sec-icon" style="background:var(--c5);color:var(--c1)">📑</div>
+        <div><h3>Procurement Signals</h3><div class="sub">Open RFPs · awarded contracts · expiring agreements</div></div>
+        <div class="spacer"></div>
+        <div class="src">SRC: Bid portals · Council awards · Contract registers</div>
+      </div>
+      <div class="sec-body">
+        <div class="signal relevant" data-lens="saas">
+          <div class="sig-icon" style="background:var(--c2)">RFP</div>
+          <div class="sig-body">
+            <div class="sig-title">Open RFP — Utility billing &amp; CIS platform replacement <span class="lens-flag">LENS MATCH</span></div>
+            <div class="sig-desc">Active solicitation to replace legacy billing/customer-info system. Closes Jul 2026. Direct enterprise-SaaS opportunity.</div>
+            <div class="sig-foot"><span class="chip high">HIGH</span><span class="chip date">Closes Jul 2026</span><span class="chip src">Bid Portal #2026-114</span></div>
+          </div>
+        </div>
+        <div class="signal relevant" data-lens="om">
+          <div class="sig-icon" style="background:var(--c7)">⌛</div>
+          <div class="sig-body">
+            <div class="sig-title">Biosolids hauling &amp; disposal contract expiring <span class="lens-flag">LENS MATCH</span></div>
+            <div class="sig-desc">Current 3-yr contract lapses Dec 2026; renewal/re-bid window opening — partial-outsourcing entry point.</div>
+            <div class="sig-foot"><span class="chip med">MEDIUM</span><span class="chip date">Expires Dec 2026</span><span class="chip src">Contract Register</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer" style="border-top:1px solid var(--line);background:#fff;border-radius:0 0 13px 13px;margin-top:-4px">
+      <span style="font-size:11.5px;color:var(--muted)">All figures are illustrative placeholder data for concept demonstration.</span>
+    </div>
+
+  </main>
+</div>
+
+<div class="brandbar"></div>
+<div class="footer">
+  <span class="logo-sm">CITYLITICS</span>
+  <span>Intelligence Profiles · Concept Mockup v0.1</span>
+  <span style="flex:1"></span>
+  <span>Owner-centric infrastructure intelligence · Per-entity signal aggregation</span>
+</div>
+
+<script>
+  const lensData = {
+    all:  {note:"Showing all signals across every context."},
+    om:   {icon:"🔧", title:"O&M Outsourcing Fit", sub:"Use case 1 — targeting municipalities likely to require third-party contracted operations",
+           fit:"High", reasons:"<b>Why this owner scores High:</b> operating-cost overruns (O&M +11% over budget), WRF near hydraulic capacity with staffing strain, leadership vacancy at Utilities Director, an incoming deputy with privatized-operations background, and an expiring biosolids contract. Multiple independent signals converge on operational-burden + openness-to-alternative-delivery — the canonical outsourcing-readiness pattern."},
+    saas: {icon:"💻", title:"SaaS / Enterprise Lead", sub:"Use case 2 — shortlisting entities with multiple signals of new or renewal SaaS-contract need",
+           fit:"High", reasons:"<b>Why this owner scores High:</b> a live RFP to replace the billing/CIS platform (active buying window), budgeted SCADA + AMI modernization, a rate study funding new systems, and a leadership change that often triggers tech-stack re-evaluation. Two distinct software-buying triggers (CIS replacement + SCADA/AMI) plus budget capacity = strong enterprise-software lead."}
+  };
+
+  const lensBtns = document.querySelectorAll('.lens');
+  const note = document.getElementById('lensNote');
+  const summary = document.getElementById('lensSummary');
+
+  lensBtns.forEach(b=>b.addEventListener('click',()=>{
+    lensBtns.forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    const lens = b.dataset.lens;
+    document.querySelectorAll('.signal').forEach(s=>{
+      const tags = (s.dataset.lens||"");
+      if(lens==='all'){ s.classList.remove('relevant'); s.classList.remove('dim'); s.classList.remove('relevant'); s.classList.toggle('relevant', false); }
+      else { s.classList.toggle('relevant', tags.split(' ').includes(lens)); }
+    });
+    // For 'all' restore the originally-relevant cross-cutting ones to neutral
+    if(lens==='all'){ document.querySelectorAll('.signal').forEach(s=>s.classList.remove('relevant')); }
+
+    if(lens==='all'){ summary.style.display='none'; note.textContent=lensData.all.note; }
+    else{
+      const d=lensData[lens];
+      summary.style.display='block';
+      document.getElementById('lensSumIcon').textContent=d.icon;
+      document.getElementById('lensSumTitle').textContent=d.title;
+      document.getElementById('lensSumSub').textContent=d.sub;
+      document.getElementById('lensFit').textContent=d.fit;
+      document.getElementById('lensReasons').innerHTML=d.reasons;
+      note.textContent="Highlighted rows = signals matched to this use case.";
+    }
+  }));
+
+  // context cards + nav cosmetic interactivity
+  document.querySelectorAll('.nav-item').forEach(n=>n.addEventListener('click',()=>{
+    document.querySelectorAll('.nav-item').forEach(x=>x.classList.remove('active'));
+    n.classList.add('active');
+  }));
+</script>
+</body>
+</html>
